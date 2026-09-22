@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Feedback System | Faculty</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+        /* =========================================================
+           FACULTY PAGE
+        ========================================================== */
+
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 11px 18px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .secondary-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* =========================================================
+           SUMMARY
+        ========================================================== */
+
+        .faculty-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .summary-info span {
+            color: var(--text-secondary);
+            font-size: 12px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .summary-info h3 {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .summary-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .summary-card:nth-child(1) .summary-icon {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.12);
+        }
+
+        .summary-card:nth-child(2) .summary-icon {
+            color: var(--accent-yellow);
+            background: rgba(245, 158, 11, 0.12);
+        }
+
+        .summary-card:nth-child(3) .summary-icon {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        .summary-card:nth-child(4) .summary-icon {
+            color: var(--accent-pink);
+            background: rgba(236, 72, 153, 0.12);
+        }
+
+        /* =========================================================
+           FILTER
+        ========================================================== */
+
+        .filter-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .search-box-page {
+            position: relative;
+        }
+
+        .search-box-page i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+        }
+
+        .search-box-page input,
+        .faculty-select {
+            width: 100%;
+            height: 44px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .search-box-page input {
+            padding: 0 14px 0 40px;
+        }
+
+        .faculty-select {
+            padding: 0 12px;
+        }
+
+        .search-box-page input:focus,
+        .faculty-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-bg);
+        }
+
+        /* =========================================================
+           FACULTY GRID
+        ========================================================== */
+
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .faculty-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .faculty-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 4px;
+            background: linear-gradient(
+                90deg,
+                var(--primary),
+                var(--accent-purple)
+            );
+        }
+
+        .faculty-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .faculty-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 3px solid var(--bg-primary);
+        }
+
+        .faculty-status {
+            padding: 5px 10px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-green);
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .faculty-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .faculty-role {
+            color: var(--text-secondary);
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .faculty-department {
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .faculty-rating {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .rating-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .rating-left span {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .rating-stars i {
+            color: #f59e0b;
+            font-size: 12px;
+        }
+
+        .rating-number {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .faculty-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .faculty-stat {
+            text-align: center;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 10px 5px;
+        }
+
+        .faculty-stat strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .faculty-stat span {
+            color: var(--text-tertiary);
+            font-size: 9px;
+        }
+
+        .faculty-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .faculty-action {
+            flex: 1;
+            height: 38px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border-radius: 9px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .faculty-action:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .faculty-action.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .faculty-action.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .empty-state {
+            display: none;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 70px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+        }
+
+        .empty-state i {
+            font-size: 42px;
+            color: var(--text-tertiary);
+            margin-bottom: 14px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .faculty-modal {
+            width: min(650px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-size: 17px;
+        }
+
+        .close-modal {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 22px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .profile-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+        }
+
+        .profile-header h2 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .profile-header p {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .detail-box {
+            padding: 14px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+        }
+
+        .detail-box label {
+            display: block;
+            color: var(--text-tertiary);
+            font-size: 9px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .detail-box strong {
+            font-size: 12px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1200px) {
+
+            .faculty-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .faculty-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .faculty-grid,
+            .faculty-summary,
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+
+                <div class="logo-text">
+                    <h2>FeedbackHub</h2>
+                    <span>Student Portal</span>
+                </div>
+
+            </div>
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+            >
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <ul>
+
+                <li class="nav-item">
+                    <a href="../index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="feedbacks.html">
+                        <i class="fas fa-comments"></i>
+                        <span>Feedbacks</span>
+                    </a>
+                </li>
+
+                <li class="nav-item active">
+                    <a href="faculty.html">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Faculty</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="courses.html">
+                        <i class="fas fa-book-open"></i>
+                        <span>Courses</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="analytics.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="reports.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="notifications.html">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="nav-divider"></div>
+
+            <p class="nav-section-title">
+                Settings
+            </p>
+
+            <ul>
+
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="user-card">
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=40"
+                    alt="Admin"
+                >
+
+                <div class="user-info">
+
+                    <h4>
+                        Dr. Sarah Wilson
+                    </h4>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="menu-btn"
+                    id="menuBtn"
+                    type="button"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Search faculty..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div
+                    class="topbar-icon"
+                    id="themeToggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon"></i>
+                </div>
+
+                <div
+                    class="topbar-icon"
+                    title="Notifications"
+                    onclick="window.location.href='notifications.html'"
+                >
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="topbar-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                <div class="user-avatar">
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=36"
+                        alt="Admin"
+                    >
+
+                    <span class="status-dot"></span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+        ====================================================== -->
+
+        <div class="page-content">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div class="page-title">
+
+                    <h1>
+                        Faculty Management
+                    </h1>
+
+                    <p>
+                        View faculty profiles, ratings and student feedback performance.
+                    </p>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        class="secondary-btn"
+                        id="exportFacultyBtn"
+                        type="button"
+                    >
+                        <i class="fas fa-download"></i>
+                        Export
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        id="addFacultyBtn"
+                        type="button"
+                    >
+                        <i class="fas fa-user-plus"></i>
+                        Add Faculty
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+            ================================================== -->
+
+            <div class="faculty-summary">
+
+                <div class="summary-card">
+
+                    <div class="summary-info">
+
+                        <span>
+                            Total Faculty
+                        </span>
+
+                        <h3>
+                            156
+                        </h3>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-info">
+
+                        <span>
+                            Average Rating
+                        </span>
+
+                        <h3>
+                            4.6
+                        </h3>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-info">
+
+                        <span>
+                            Top Rated Faculty
+                        </span>
+
+                        <h3>
+                            28
+                        </h3>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-info">
+
+                        <span>
+                            Departments
+                        </span>
+
+                        <h3>
+                            12
+                        </h3>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FILTERS
+            ================================================== -->
+
+            <div class="filter-panel">
+
+                <div class="filter-row">
+
+                    <div class="search-box-page">
+
+                        <i class="fas fa-search"></i>
+
+                        <input
+                            type="text"
+                            id="facultySearch"
+                            placeholder="Search faculty name, department..."
+                        >
+
+                    </div>
+
+
+                    <select
+                        class="faculty-select"
+                        id="departmentFilter"
+                    >
+
+                        <option value="all">
+                            All Departments
+                        </option>
+
+                        <option value="Computer Science">
+                            Computer Science
+                        </option>
+
+                        <option value="Mathematics">
+                            Mathematics
+                        </option>
+
+                        <option value="Physics">
+                            Physics
+                        </option>
+
+                        <option value="English Literature">
+                            English Literature
+                        </option>
+
+                        <option value="Chemistry">
+                            Chemistry
+                        </option>
+
+                        <option value="Biology">
+                            Biology
+                        </option>
+
+                        <option value="Economics">
+                            Economics
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        class="faculty-select"
+                        id="ratingFilter"
+                    >
+
+                        <option value="all">
+                            All Ratings
+                        </option>
+
+                        <option value="5">
+                            5.0 Rating
+                        </option>
+
+                        <option value="4.5">
+                            4.5+ Rating
+                        </option>
+
+                        <option value="4">
+                            4.0+ Rating
+                        </option>
+
+                        <option value="3">
+                            3.0+ Rating
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        class="faculty-select"
+                        id="statusFilter"
+                    >
+
+                        <option value="all">
+                            All Faculty
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="leave">
+                            On Leave
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FACULTY GRID
+            ================================================== -->
+
+            <div
+                class="faculty-grid"
+                id="facultyGrid"
+            >
+            </div>
+
+
+            <!-- EMPTY STATE -->
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <i class="fas fa-user-slash"></i>
+
+                <h3>
+                    No Faculty Found
+                </h3>
+
+                <p>
+                    Try changing your search or filter criteria.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         FACULTY MODAL
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="facultyModal"
+    >
+
+        <div class="faculty-modal">
+
+            <div class="modal-header">
+
+                <h3>
+                    Faculty Profile
+                </h3>
+
+                <button
+                    class="close-modal"
+                    id="closeModal"
+                    type="button"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="profile-header">
+
+                    <img
+                        id="modalAvatar"
+                        src=""
+                        alt="Faculty"
+                    >
+
+                    <div>
+
+                        <h2 id="modalName">
+                            -
+                        </h2>
+
+                        <p id="modalRole">
+                            -
+                        </p>
+
+                        <p id="modalDepartment">
+                            -
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-grid">
+
+                    <div class="detail-box">
+
+                        <label>
+                            Average Rating
+                        </label>
+
+                        <strong id="modalRating">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>
+                            Total Reviews
+                        </label>
+
+                        <strong id="modalReviews">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>
+                            Courses
+                        </label>
+
+                        <strong id="modalCourses">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>
+                            Experience
+                        </label>
+
+                        <strong id="modalExperience">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>
+                            Response Rate
+                        </label>
+
+                        <strong id="modalResponse">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <label>
+                            Current Status
+                        </label>
+
+                        <strong id="modalStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="secondary-btn"
+                    id="closeModalBtn"
+                    type="button"
+                >
+                    Close
+                </button>
+
+                <button
+                    class="primary-btn"
+                    id="viewFeedbackBtn"
+                    type="button"
+                >
+                    <i class="fas fa-comments"></i>
+                    View Feedback
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           FACULTY DATA
+        ========================================================== */
+
+        const facultyData = [
+
+            {
+                id: 1,
+                name: "Prof. John Smith",
+                role: "Professor",
+                department: "Computer Science",
+                rating: 4.9,
+                reviews: 342,
+                courses: 5,
+                experience: "15 Years",
+                response: "96%",
+                status: "active",
+                avatar: "John+Smith",
+                color: "6366f1"
+            },
+
+            {
+                id: 2,
+                name: "Dr. Emily Davis",
+                role: "Associate Professor",
+                department: "Mathematics",
+                rating: 4.8,
+                reviews: 289,
+                courses: 4,
+                experience: "12 Years",
+                response: "94%",
+                status: "active",
+                avatar: "Emily+Davis",
+                color: "ec4899"
+            },
+
+            {
+                id: 3,
+                name: "Prof. Michael Lee",
+                role: "Professor",
+                department: "Physics",
+                rating: 4.7,
+                reviews: 256,
+                courses: 4,
+                experience: "18 Years",
+                response: "91%",
+                status: "active",
+                avatar: "Michael+Lee",
+                color: "f59e0b"
+            },
+
+            {
+                id: 4,
+                name: "Dr. Sarah Brown",
+                role: "Assistant Professor",
+                department: "English Literature",
+                rating: 4.6,
+                reviews: 198,
+                courses: 3,
+                experience: "8 Years",
+                response: "89%",
+                status: "active",
+                avatar: "Sarah+Brown",
+                color: "10b981"
+            },
+
+            {
+                id: 5,
+                name: "Prof. David Wilson",
+                role: "Professor",
+                department: "Chemistry",
+                rating: 4.5,
+                reviews: 175,
+                courses: 4,
+                experience: "14 Years",
+                response: "87%",
+                status: "active",
+                avatar: "David+Wilson",
+                color: "8b5cf6"
+            },
+
+            {
+                id: 6,
+                name: "Dr. Lisa Anderson",
+                role: "Associate Professor",
+                department: "Biology",
+                rating: 4.4,
+                reviews: 164,
+                courses: 3,
+                experience: "10 Years",
+                response: "92%",
+                status: "active",
+                avatar: "Lisa+Anderson",
+                color: "06b6d4"
+            },
+
+            {
+                id: 7,
+                name: "Prof. Robert Taylor",
+                role: "Professor",
+                department: "Economics",
+                rating: 4.3,
+                reviews: 151,
+                courses: 3,
+                experience: "16 Years",
+                response: "88%",
+                status: "active",
+                avatar: "Robert+Taylor",
+                color: "ef4444"
+            },
+
+            {
+                id: 8,
+                name: "Dr. Jessica Moore",
+                role: "Assistant Professor",
+                department: "Computer Science",
+                rating: 4.8,
+                reviews: 227,
+                courses: 4,
+                experience: "7 Years",
+                response: "95%",
+                status: "active",
+                avatar: "Jessica+Moore",
+                color: "ec4899"
+            },
+
+            {
+                id: 9,
+                name: "Dr. Daniel Martin",
+                role: "Associate Professor",
+                department: "Mathematics",
+                rating: 4.2,
+                reviews: 142,
+                courses: 3,
+                experience: "11 Years",
+                response: "85%",
+                status: "leave",
+                avatar: "Daniel+Martin",
+                color: "6366f1"
+            },
+
+            {
+                id: 10,
+                name: "Prof. Laura White",
+                role: "Professor",
+                department: "Physics",
+                rating: 4.5,
+                reviews: 188,
+                courses: 4,
+                experience: "13 Years",
+                response: "90%",
+                status: "active",
+                avatar: "Laura+White",
+                color: "10b981"
+            },
+
+            {
+                id: 11,
+                name: "Dr. Thomas Harris",
+                role: "Assistant Professor",
+                department: "Chemistry",
+                rating: 4.1,
+                reviews: 128,
+                courses: 2,
+                experience: "6 Years",
+                response: "82%",
+                status: "active",
+                avatar: "Thomas+Harris",
+                color: "f59e0b"
+            },
+
+            {
+                id: 12,
+                name: "Dr. Karen Clark",
+                role: "Associate Professor",
+                department: "Biology",
+                rating: 4.6,
+                reviews: 173,
+                courses: 3,
+                experience: "9 Years",
+                response: "93%",
+                status: "active",
+                avatar: "Karen+Clark",
+                color: "8b5cf6"
+            }
+
+        ];
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================== */
+
+        const facultyGrid =
+            document.getElementById("facultyGrid");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const facultySearch =
+            document.getElementById("facultySearch");
+
+        const globalSearch =
+            document.getElementById("globalSearch");
+
+        const departmentFilter =
+            document.getElementById("departmentFilter");
+
+        const ratingFilter =
+            document.getElementById("ratingFilter");
+
+        const statusFilter =
+            document.getElementById("statusFilter");
+
+        const modal =
+            document.getElementById("facultyModal");
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================== */
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.toggle("collapsed");
+
+        });
+
+
+        menuBtn.addEventListener("click", () => {
+
+            sidebar.classList.toggle("open");
+
+        });
+
+
+        /* =========================================================
+           THEME
+        ========================================================== */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const themeIcon =
+            themeToggle.querySelector("i");
+
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                "dark"
+            );
+
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+
+        }
+
+
+        themeToggle.addEventListener("click", () => {
+
+            const isDark =
+                document.documentElement.getAttribute(
+                    "data-theme"
+                ) === "dark";
+
+
+            if (isDark) {
+
+                document.documentElement.setAttribute(
+                    "data-theme",
+                    "light"
+                );
+
+                themeIcon.classList.remove("fa-sun");
+                themeIcon.classList.add("fa-moon");
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            } else {
+
+                document.documentElement.setAttribute(
+                    "data-theme",
+                    "dark"
+                );
+
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            }
+
+        });
+
+
+        /* =========================================================
+           STAR GENERATOR
+        ========================================================== */
+
+        function generateStars(rating) {
+
+            let html = "";
+
+            for (let i = 1; i <= 5; i++) {
+
+                if (i <= Math.floor(rating)) {
+
+                    html +=
+                        '<i class="fas fa-star"></i>';
+
+                } else if (
+                    i === Math.ceil(rating) &&
+                    rating % 1 !== 0
+                ) {
+
+                    html +=
+                        '<i class="fas fa-star-half-alt"></i>';
+
+                } else {
+
+                    html +=
+                        '<i class="far fa-star"></i>';
+
+                }
+
+            }
+
+            return html;
+
+        }
+
+
+        /* =========================================================
+           RENDER FACULTY
+        ========================================================== */
+
+        function renderFaculty(data) {
+
+            facultyGrid.innerHTML = "";
+
+
+            if (data.length === 0) {
+
+                emptyState.style.display = "block";
+
+                return;
+
+            }
+
+
+            emptyState.style.display = "none";
+
+
+            data.forEach(faculty => {
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "faculty-card";
+
+
+                card.innerHTML = `
+
+                    <div class="faculty-top">
+
+                        <img
+                            class="faculty-avatar"
+                            src="https://ui-avatars.com/api/?name=${faculty.avatar}&background=${faculty.color}&color=fff&rounded=true&size=100"
+                            alt="${faculty.name}"
+                        >
+
+                        <span class="faculty-status">
+
+                            ${
+                                faculty.status === "active"
+                                    ? "Active"
+                                    : "On Leave"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <h3 class="faculty-name">
+                        ${faculty.name}
+                    </h3>
+
+
+                    <p class="faculty-role">
+                        ${faculty.role}
+                    </p>
+
+
+                    <p class="faculty-department">
+                        ${faculty.department}
+                    </p>
+
+
+                    <div class="faculty-rating">
+
+                        <div class="rating-left">
+
+                            <span>
+                                Student Rating
+                            </span>
+
+                            <div class="rating-stars">
+
+                                ${generateStars(faculty.rating)}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="rating-number">
+
+                            ${faculty.rating}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faculty-stats">
+
+                        <div class="faculty-stat">
+
+                            <strong>
+                                ${faculty.reviews}
+                            </strong>
+
+                            <span>
+                                Reviews
+                            </span>
+
+                        </div>
+
+
+                        <div class="faculty-stat">
+
+                            <strong>
+                                ${faculty.courses}
+                            </strong>
+
+                            <span>
+                                Courses
+                            </span>
+
+                        </div>
+
+
+                        <div class="faculty-stat">
+
+                            <strong>
+                                ${faculty.response}
+                            </strong>
+
+                            <span>
+                                Response
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="faculty-actions">
+
+                        <button
+                            class="faculty-action"
+                            type="button"
+                            onclick="viewFaculty(${faculty.id})"
+                        >
+                            <i class="fas fa-eye"></i>
+                            View
+                        </button>
+
+
+                        <button
+                            class="faculty-action primary"
+                            type="button"
+                            onclick="viewFacultyFeedback(${faculty.id})"
+                        >
+                            <i class="fas fa-comments"></i>
+                            Feedback
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                facultyGrid.appendChild(card);
+
+            });
+
+        }
+
+
+        /* =========================================================
+           FILTER
+        ========================================================== */
+
+        function applyFilters() {
+
+            const search =
+                facultySearch.value
+                    .toLowerCase()
+                    .trim();
+
+            const department =
+                departmentFilter.value;
+
+            const rating =
+                ratingFilter.value;
+
+            const status =
+                statusFilter.value;
+
+
+            const filtered =
+                facultyData.filter(faculty => {
+
+                    const matchesSearch =
+
+                        faculty.name
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        faculty.department
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        faculty.role
+                            .toLowerCase()
+                            .includes(search);
+
+
+                    const matchesDepartment =
+
+                        department === "all" ||
+
+                        faculty.department === department;
+
+
+                    let matchesRating = true;
+
+
+                    if (rating !== "all") {
+
+                        const minRating =
+                            Number(rating);
+
+                        matchesRating =
+                            faculty.rating >= minRating;
+
+                    }
+
+
+                    const matchesStatus =
+
+                        status === "all" ||
+
+                        faculty.status === status;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesDepartment &&
+                        matchesRating &&
+                        matchesStatus
+                    );
+
+                });
+
+
+            renderFaculty(filtered);
+
+        }
+
+
+        facultySearch.addEventListener(
+            "input",
+            applyFilters
+        );
+
+
+        departmentFilter.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+        ratingFilter.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+        statusFilter.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+        globalSearch.addEventListener("input", () => {
+
+            facultySearch.value =
+                globalSearch.value;
+
+            applyFilters();
+
+        });
+
+
+        /* =========================================================
+           VIEW FACULTY
+        ========================================================== */
+
+        window.viewFaculty = function(id) {
+
+            const faculty =
+                facultyData.find(
+                    item => item.id === id
+                );
+
+
+            if (!faculty) return;
+
+
+            document.getElementById("modalAvatar").src =
+                `https://ui-avatars.com/api/?name=${faculty.avatar}&background=${faculty.color}&color=fff&rounded=true&size=100`;
+
+
+            document.getElementById("modalName").textContent =
+                faculty.name;
+
+
+            document.getElementById("modalRole").textContent =
+                faculty.role;
+
+
+            document.getElementById("modalDepartment").textContent =
+                faculty.department;
+
+
+            document.getElementById("modalRating").textContent =
+                `${faculty.rating} / 5`;
+
+
+            document.getElementById("modalReviews").textContent =
+                faculty.reviews;
+
+
+            document.getElementById("modalCourses").textContent =
+                faculty.courses;
+
+
+            document.getElementById("modalExperience").textContent =
+                faculty.experience;
+
+
+            document.getElementById("modalResponse").textContent =
+                faculty.response;
+
+
+            document.getElementById("modalStatus").textContent =
+                faculty.status === "active"
+                    ? "Active"
+                    : "On Leave";
+
+
+            document.getElementById("viewFeedbackBtn").dataset.id =
+                faculty.id;
+
+
+            modal.classList.add("active");
+
+        };
+
+
+        /* =========================================================
+           VIEW FACULTY FEEDBACK
+        ========================================================== */
+
+        window.viewFacultyFeedback = function(id) {
+
+            const faculty =
+                facultyData.find(
+                    item => item.id === id
+                );
+
+
+            if (!faculty) return;
+
+
+            window.location.href =
+                `feedbacks.html?faculty=${encodeURIComponent(
+                    faculty.name
+                )}`;
+
+        };
+
+
+        /* =========================================================
+           MODAL CLOSE
+        ========================================================== */
+
+        document.getElementById("closeModal")
+            .addEventListener("click", () => {
+
+                modal.classList.remove("active");
+
+            });
+
+
+        document.getElementById("closeModalBtn")
+            .addEventListener("click", () => {
+
+                modal.classList.remove("active");
+
+            });
+
+
+        modal.addEventListener("click", event => {
+
+            if (event.target === modal) {
+
+                modal.classList.remove("active");
+
+            }
+
+        });
+
+
+        /* =========================================================
+           VIEW FEEDBACK FROM MODAL
+        ========================================================== */
+
+        document.getElementById("viewFeedbackBtn")
+            .addEventListener("click", function() {
+
+                const id =
+                    Number(this.dataset.id);
+
+
+                const faculty =
+                    facultyData.find(
+                        item => item.id === id
+                    );
+
+
+                if (!faculty) return;
+
+
+                window.location.href =
+                    `feedbacks.html?faculty=${encodeURIComponent(
+                        faculty.name
+                    )}`;
+
+            });
+
+
+        /* =========================================================
+           ADD FACULTY
+        ========================================================== */
+
+        document.getElementById("addFacultyBtn")
+            .addEventListener("click", () => {
+
+                alert(
+                    "Add Faculty form will be connected in the faculty administration module."
+                );
+
+            });
+
+
+        /* =========================================================
+           EXPORT
+        ========================================================== */
+
+        document.getElementById("exportFacultyBtn")
+            .addEventListener("click", () => {
+
+                let csv =
+                    "Name,Role,Department,Rating,Reviews,Courses,Experience,Response Rate,Status\n";
+
+
+                facultyData.forEach(faculty => {
+
+                    csv +=
+                        `"${faculty.name}","${faculty.role}","${faculty.department}","${faculty.rating}","${faculty.reviews}","${faculty.courses}","${faculty.experience}","${faculty.response}","${faculty.status}"\n`;
+
+                });
+
+
+                const blob =
+                    new Blob(
+                        [csv],
+                        {
+                            type: "text/csv;charset=utf-8;"
+                        }
+                    );
+
+
+                const url =
+                    URL.createObjectURL(blob);
+
+
+                const link =
+                    document.createElement("a");
+
+
+                link.href = url;
+
+                link.download =
+                    "faculty-report.csv";
+
+                link.click();
+
+                URL.revokeObjectURL(url);
+
+            });
+
+
+        /* =========================================================
+           LOGOUT
+        ========================================================== */
+
+        document.getElementById("logoutBtn")
+            .addEventListener("click", event => {
+
+                event.preventDefault();
+
+
+                const confirmLogout =
+                    confirm(
+                        "Are you sure you want to logout?"
+                    );
+
+
+                if (confirmLogout) {
+
+                    window.location.href =
+                        "../index.html";
+
+                }
+
+            });
+
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================== */
+
+        renderFaculty(facultyData);
+
+    </script>
+
+</body>
+</html>

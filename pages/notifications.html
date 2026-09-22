@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Feedback System | Notifications</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           NOTIFICATIONS PAGE
+        ========================================================== */
+
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn {
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 11px 18px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.22);
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .secondary-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .danger-btn {
+            background: rgba(239, 68, 68, 0.10);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.18);
+        }
+
+        .danger-btn:hover {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        /* =========================================================
+           SUMMARY CARDS
+        ========================================================== */
+
+        .notification-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .summary-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .summary-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .summary-card:nth-child(1) .summary-icon {
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary);
+        }
+
+        .summary-card:nth-child(2) .summary-icon {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--accent-red);
+        }
+
+        .summary-card:nth-child(3) .summary-icon {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-green);
+        }
+
+        .summary-card:nth-child(4) .summary-icon {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent-yellow);
+        }
+
+        /* =========================================================
+           FILTER BAR
+        ========================================================== */
+
+        .filter-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+        }
+
+        .filter-input,
+        .filter-select {
+            width: 100%;
+            height: 43px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            outline: none;
+        }
+
+        .filter-input {
+            padding: 0 14px 0 40px;
+        }
+
+        .filter-select {
+            padding: 0 11px;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-bg);
+        }
+
+        /* =========================================================
+           NOTIFICATION CONTENT
+        ========================================================== */
+
+        .notification-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .notification-card,
+        .preference-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+
+        .card-header p {
+            color: var(--text-secondary);
+            font-size: 10px;
+        }
+
+        .notification-list {
+            padding: 5px 0;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 17px 20px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        .notification-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item.unread {
+            background: rgba(99, 102, 241, 0.035);
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary);
+        }
+
+        .notification-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .notification-icon.feedback {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.12);
+        }
+
+        .notification-icon.alert {
+            color: var(--accent-red);
+            background: rgba(239, 68, 68, 0.12);
+        }
+
+        .notification-icon.success {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        .notification-icon.reminder {
+            color: var(--accent-yellow);
+            background: rgba(245, 158, 11, 0.12);
+        }
+
+        .notification-icon.report {
+            color: var(--accent-purple);
+            background: rgba(139, 92, 246, 0.12);
+        }
+
+        .notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .notification-title-row h4 {
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .notification-time {
+            color: var(--text-tertiary);
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        .notification-message {
+            color: var(--text-secondary);
+            font-size: 10px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .notification-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .notification-tag {
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .unread-label {
+            padding: 4px 8px;
+            border-radius: 999px;
+            color: var(--primary);
+            background: var(--primary-bg);
+            font-size: 8px;
+            font-weight: 600;
+        }
+
+        .notification-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .notification-action {
+            width: 29px;
+            height: 29px;
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition-fast);
+        }
+
+        .notification-action:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .notification-action.delete:hover {
+            color: var(--accent-red);
+            border-color: var(--accent-red);
+        }
+
+        /* =========================================================
+           PREFERENCES
+        ========================================================== */
+
+        .preference-content {
+            padding: 20px;
+        }
+
+        .preference-section {
+            margin-bottom: 22px;
+        }
+
+        .preference-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .preference-section h4 {
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        .preference-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preference-row:last-child {
+            border-bottom: none;
+        }
+
+        .preference-info strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .preference-info span {
+            color: var(--text-secondary);
+            font-size: 9px;
+            line-height: 1.4;
+        }
+
+        .switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 999px;
+            transition: 0.2s;
+        }
+
+        .slider::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            left: 3px;
+            top: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .switch input:checked + .slider {
+            background: var(--primary);
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(18px);
+        }
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================== */
+
+        .empty-state {
+            display: none;
+            padding: 65px 20px;
+            text-align: center;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            min-width: 280px;
+            max-width: 380px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: 0.3s ease;
+            z-index: 5000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            color: var(--accent-green);
+            font-size: 18px;
+        }
+
+        .toast strong {
+            display: block;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .toast span {
+            color: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1200px) {
+
+            .notification-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .notification-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-wrapper {
+                grid-column: 1 / -1;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .notification-summary,
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-wrapper {
+                grid-column: auto;
+            }
+
+            .notification-item {
+                padding: 15px;
+            }
+
+            .notification-title-row {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .notification-actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+
+                <div class="logo-text">
+                    <h2>FeedbackHub</h2>
+                    <span>Student Portal</span>
+                </div>
+
+            </div>
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+            >
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <ul>
+
+                <li class="nav-item">
+                    <a href="../index.html">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="feedbacks.html">
+                        <i class="fas fa-comments"></i>
+                        <span>Feedbacks</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="faculty.html">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Faculty</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="courses.html">
+                        <i class="fas fa-book-open"></i>
+                        <span>Courses</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="analytics.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="reports.html">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+
+                <li class="nav-item active">
+                    <a href="notifications.html">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <div class="nav-divider"></div>
+
+            <p class="nav-section-title">
+                Settings
+            </p>
+
+            <ul>
+
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="user-card">
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=40"
+                    alt="Admin"
+                >
+
+                <div class="user-info">
+
+                    <h4>
+                        Dr. Sarah Wilson
+                    </h4>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="menu-btn"
+                    id="menuBtn"
+                    type="button"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Search notifications..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div
+                    class="topbar-icon"
+                    id="themeToggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon"></i>
+                </div>
+
+                <div
+                    class="topbar-icon"
+                    title="Notifications"
+                >
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="topbar-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                <div class="user-avatar">
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=36"
+                        alt="Admin"
+                    >
+
+                    <span class="status-dot"></span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+        ====================================================== -->
+
+        <div class="page-content">
+
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div class="page-title">
+
+                    <h1>
+                        Notifications
+                    </h1>
+
+                    <p>
+                        Stay updated with student feedback, reports and system activity.
+                    </p>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        class="secondary-btn"
+                        id="markAllBtn"
+                        type="button"
+                    >
+                        <i class="fas fa-check-double"></i>
+                        Mark All Read
+                    </button>
+
+                    <button
+                        class="danger-btn"
+                        id="clearAllBtn"
+                        type="button"
+                    >
+                        <i class="fas fa-trash-alt"></i>
+                        Clear All
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+            <div class="notification-summary">
+
+
+                <div class="summary-card">
+
+                    <div>
+
+                        <span class="summary-label">
+                            Total Notifications
+                        </span>
+
+                        <div
+                            class="summary-value"
+                            id="totalNotifications"
+                        >
+                            10
+                        </div>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div>
+
+                        <span class="summary-label">
+                            Unread
+                        </span>
+
+                        <div
+                            class="summary-value"
+                            id="unreadNotifications"
+                        >
+                            3
+                        </div>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div>
+
+                        <span class="summary-label">
+                            System Alerts
+                        </span>
+
+                        <div
+                            class="summary-value"
+                            id="alertNotifications"
+                        >
+                            2
+                        </div>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div>
+
+                        <span class="summary-label">
+                            This Week
+                        </span>
+
+                        <div
+                            class="summary-value"
+                            id="weekNotifications"
+                        >
+                            7
+                        </div>
+
+                    </div>
+
+                    <div class="summary-icon">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FILTERS
+            ================================================== -->
+
+            <div class="filter-panel">
+
+                <div class="filter-row">
+
+                    <div class="search-wrapper">
+
+                        <i class="fas fa-search"></i>
+
+                        <input
+                            type="text"
+                            class="filter-input"
+                            id="notificationSearch"
+                            placeholder="Search notification title or message..."
+                        >
+
+                    </div>
+
+
+                    <select
+                        class="filter-select"
+                        id="typeFilter"
+                    >
+
+                        <option value="all">
+                            All Types
+                        </option>
+
+                        <option value="feedback">
+                            Feedback
+                        </option>
+
+                        <option value="alert">
+                            Alerts
+                        </option>
+
+                        <option value="success">
+                            Success
+                        </option>
+
+                        <option value="reminder">
+                            Reminder
+                        </option>
+
+                        <option value="report">
+                            Reports
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        class="filter-select"
+                        id="readFilter"
+                    >
+
+                        <option value="all">
+                            All Notifications
+                        </option>
+
+                        <option value="unread">
+                            Unread
+                        </option>
+
+                        <option value="read">
+                            Read
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        class="filter-select"
+                        id="timeFilter"
+                    >
+
+                        <option value="all">
+                            All Time
+                        </option>
+
+                        <option value="today">
+                            Today
+                        </option>
+
+                        <option value="week">
+                            This Week
+                        </option>
+
+                        <option value="month">
+                            This Month
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NOTIFICATIONS
+            ================================================== -->
+
+            <div class="notification-layout">
+
+
+                <!-- Notification List -->
+                <div class="notification-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Recent Notifications
+                            </h3>
+
+                            <p>
+                                Your latest system updates and activity.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="notification-list"
+                        id="notificationList"
+                    >
+                    </div>
+
+
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                    >
+
+                        <i class="fas fa-bell-slash"></i>
+
+                        <h3>
+                            No Notifications Found
+                        </h3>
+
+                        <p>
+                            Try changing your filters or search criteria.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Preferences -->
+                <div class="preference-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>
+                                Notification Preferences
+                            </h3>
+
+                            <p>
+                                Control how you receive updates.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="preference-content">
+
+
+                        <div class="preference-section">
+
+                            <h4>
+                                General
+                            </h4>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        New Feedback
+                                    </strong>
+
+                                    <span>
+                                        Notify when students submit feedback.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefFeedback"
+                                        checked
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        System Alerts
+                                    </strong>
+
+                                    <span>
+                                        Receive important system notifications.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefAlerts"
+                                        checked
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        Report Updates
+                                    </strong>
+
+                                    <span>
+                                        Notify when reports are ready.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefReports"
+                                        checked
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="preference-section">
+
+                            <h4>
+                                Delivery
+                            </h4>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        Email Notifications
+                                    </strong>
+
+                                    <span>
+                                        Send notification copies by email.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefEmail"
+                                        checked
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        Browser Notifications
+                                    </strong>
+
+                                    <span>
+                                        Show browser-level notification alerts.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefBrowser"
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>
+                                        Weekly Summary
+                                    </strong>
+
+                                    <span>
+                                        Receive a weekly feedback summary.
+                                    </span>
+
+                                </div>
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="prefSummary"
+                                        checked
+                                    >
+
+                                    <span class="slider"></span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="primary-btn"
+                            id="savePreferences"
+                            type="button"
+                            style="width:100%; margin-top:15px;"
+                        >
+                            <i class="fas fa-save"></i>
+                            Save Preferences
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <i class="fas fa-check-circle"></i>
+
+        <div>
+
+            <strong id="toastTitle">
+                Done
+            </strong>
+
+            <span id="toastMessage">
+                Operation completed successfully.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           DATA
+        ========================================================== */
+
+        let notifications = [
+
+            {
+                id: 1,
+                type: "feedback",
+                title: "New Student Feedback Received",
+                message: "A new feedback submission has been received for CS301 - Data Structures.",
+                time: "5 minutes ago",
+                tag: "Feedback",
+                read: false,
+                period: "today",
+                link: "feedbacks.html"
+            },
+
+            {
+                id: 2,
+                type: "alert",
+                title: "Low Response Rate Alert",
+                message: "Response rate for the Chemistry department has dropped below 80%.",
+                time: "32 minutes ago",
+                tag: "System Alert",
+                read: false,
+                period: "today",
+                link: "analytics.html"
+            },
+
+            {
+                id: 3,
+                type: "report",
+                title: "Monthly Report Ready",
+                message: "The September 2026 student feedback report is ready for download.",
+                time: "1 hour ago",
+                tag: "Reports",
+                read: false,
+                period: "today",
+                link: "reports.html"
+            },
+
+            {
+                id: 4,
+                type: "success",
+                title: "Report Generated Successfully",
+                message: "Faculty Performance Report for Semester 5 has been generated successfully.",
+                time: "3 hours ago",
+                tag: "Success",
+                read: true,
+                period: "today",
+                link: "reports.html"
+            },
+
+            {
+                id: 5,
+                type: "feedback",
+                title: "342 New Responses",
+                message: "Student response count has increased significantly in the last 24 hours.",
+                time: "5 hours ago",
+                tag: "Feedback",
+                read: true,
+                period: "today",
+                link: "feedbacks.html"
+            },
+
+            {
+                id: 6,
+                type: "reminder",
+                title: "Feedback Deadline Approaching",
+                message: "Mid-Semester Feedback Survey closes in 3 days.",
+                time: "Yesterday",
+                tag: "Reminder",
+                read: true,
+                period: "week",
+                link: "feedbacks.html"
+            },
+
+            {
+                id: 7,
+                type: "success",
+                title: "Faculty Performance Updated",
+                message: "Faculty performance metrics have been updated with the latest student responses.",
+                time: "Yesterday",
+                tag: "Success",
+                read: true,
+                period: "week",
+                link: "faculty.html"
+            },
+
+            {
+                id: 8,
+                type: "alert",
+                title: "Flagged Feedback Requires Review",
+                message: "12 feedback submissions have been flagged and require administrator review.",
+                time: "2 days ago",
+                tag: "Action Required",
+                read: true,
+                period: "week",
+                link: "feedbacks.html"
+            },
+
+            {
+                id: 9,
+                type: "report",
+                title: "Weekly Analytics Available",
+                message: "The weekly feedback analytics report is now available.",
+                time: "4 days ago",
+                tag: "Analytics",
+                read: true,
+                period: "week",
+                link: "analytics.html"
+            },
+
+            {
+                id: 10,
+                type: "reminder",
+                title: "Faculty Review Reminder",
+                message: "Faculty members are requested to review recent student feedback.",
+                time: "6 days ago",
+                tag: "Reminder",
+                read: true,
+                period: "week",
+                link: "faculty.html"
+            }
+
+        ];
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================== */
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+        const notificationList =
+            document.getElementById("notificationList");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+        const notificationSearch =
+            document.getElementById("notificationSearch");
+
+        const globalSearch =
+            document.getElementById("globalSearch");
+
+        const typeFilter =
+            document.getElementById("typeFilter");
+
+        const readFilter =
+            document.getElementById("readFilter");
+
+        const timeFilter =
+            document.getElementById("timeFilter");
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================== */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.toggle("collapsed");
+
+        });
+
+
+        menuBtn.addEventListener("click", () => {
+
+            sidebar.classList.toggle("open");
+
+        });
+
+
+        /* =========================================================
+           THEME
+        ========================================================== */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const themeIcon =
+            themeToggle.querySelector("i");
+
+
+        if (localStorage.getItem("theme") === "dark") {
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                "dark"
+            );
+
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+
+        }
+
+
+        themeToggle.addEventListener("click", () => {
+
+            const isDark =
+                document.documentElement.getAttribute(
+                    "data-theme"
+                ) === "dark";
+
+
+            if (isDark) {
+
+                document.documentElement.setAttribute(
+                    "data-theme",
+                    "light"
+                );
+
+                themeIcon.classList.remove("fa-sun");
+                themeIcon.classList.add("fa-moon");
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
+                );
+
+            } else {
+
+                document.documentElement.setAttribute(
+                    "data-theme",
+                    "dark"
+                );
+
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+            }
+
+        });
+
+
+        /* =========================================================
+           ICONS
+        ========================================================== */
+
+        function getTypeIcon(type) {
+
+            const icons = {
+
+                feedback: "fa-comments",
+                alert: "fa-exclamation-triangle",
+                success: "fa-check-circle",
+                reminder: "fa-clock",
+                report: "fa-file-alt"
+
+            };
+
+
+            return icons[type] || "fa-bell";
+
+        }
+
+
+        /* =========================================================
+           RENDER
+        ========================================================== */
+
+        function renderNotifications() {
+
+            const search =
+                notificationSearch.value
+                    .toLowerCase()
+                    .trim();
+
+            const selectedType =
+                typeFilter.value;
+
+            const selectedRead =
+                readFilter.value;
+
+            const selectedTime =
+                timeFilter.value;
+
+
+            const filtered =
+                notifications.filter(notification => {
+
+                    const matchesSearch =
+
+                        notification.title
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        notification.message
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        notification.tag
+                            .toLowerCase()
+                            .includes(search);
+
+
+                    const matchesType =
+
+                        selectedType === "all" ||
+
+                        notification.type === selectedType;
+
+
+                    const matchesRead =
+
+                        selectedRead === "all" ||
+
+                        (
+                            selectedRead === "unread" &&
+                            !notification.read
+                        ) ||
+
+                        (
+                            selectedRead === "read" &&
+                            notification.read
+                        );
+
+
+                    const matchesTime =
+
+                        selectedTime === "all" ||
+
+                        notification.period === selectedTime;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesType &&
+                        matchesRead &&
+                        matchesTime
+                    );
+
+                });
+
+
+            notificationList.innerHTML = "";
+
+
+            if (filtered.length === 0) {
+
+                emptyState.style.display =
+                    "block";
+
+                updateSummary();
+
+                return;
+
+            }
+
+
+            emptyState.style.display =
+                "none";
+
+
+            filtered.forEach(notification => {
+
+                const item =
+                    document.createElement("div");
+
+
+                item.className =
+                    `notification-item ${
+                        notification.read
+                            ? ""
+                            : "unread"
+                    }`;
+
+
+                item.innerHTML = `
+
+                    <div
+                        class="notification-icon ${notification.type}"
+                    >
+                        <i class="fas ${getTypeIcon(notification.type)}"></i>
+                    </div>
+
+
+                    <div class="notification-content">
+
+                        <div class="notification-title-row">
+
+                            <h4>
+                                ${notification.title}
+                            </h4>
+
+                            <span class="notification-time">
+                                ${notification.time}
+                            </span>
+
+                        </div>
+
+
+                        <p class="notification-message">
+                            ${notification.message}
+                        </p>
+
+
+                        <div class="notification-meta">
+
+                            <span class="notification-tag">
+                                ${notification.tag}
+                            </span>
+
+                            ${
+                                !notification.read
+                                    ? `
+                                        <span class="unread-label">
+                                            Unread
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="notification-actions">
+
+                        <button
+                            class="notification-action"
+                            type="button"
+                            title="${
+                                notification.read
+                                    ? "Mark as unread"
+                                    : "Mark as read"
+                            }"
+                            onclick="toggleRead(${notification.id}, event)"
+                        >
+
+                            <i class="fas ${
+                                notification.read
+                                    ? "fa-envelope"
+                                    : "fa-envelope-open"
+                            }"></i>
+
+                        </button>
+
+
+                        <button
+                            class="notification-action"
+                            type="button"
+                            title="Open"
+                            onclick="openNotification(${notification.id}, event)"
+                        >
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </button>
+
+
+                        <button
+                            class="notification-action delete"
+                            type="button"
+                            title="Delete"
+                            onclick="deleteNotification(${notification.id}, event)"
+                        >
+
+                            <i class="fas fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        markAsRead(
+                            notification.id
+                        );
+
+                    }
+                );
+
+
+                notificationList.appendChild(item);
+
+            });
+
+
+            updateSummary();
+
+        }
+
+
+        /* =========================================================
+           SUMMARY
+        ========================================================== */
+
+        function updateSummary() {
+
+            const total =
+                notifications.length;
+
+
+            const unread =
+                notifications.filter(
+                    item => !item.read
+                ).length;
+
+
+            const alerts =
+                notifications.filter(
+                    item => item.type === "alert"
+                ).length;
+
+
+            const week =
+                notifications.filter(
+                    item =>
+                        item.period === "week" ||
+                        item.period === "today"
+                ).length;
+
+
+            document.getElementById(
+                "totalNotifications"
+            ).textContent =
+                total;
+
+
+            document.getElementById(
+                "unreadNotifications"
+            ).textContent =
+                unread;
+
+
+            document.getElementById(
+                "alertNotifications"
+            ).textContent =
+                alerts;
+
+
+            document.getElementById(
+                "weekNotifications"
+            ).textContent =
+                week;
+
+
+            const badge =
+                document.querySelector(
+                    ".nav-item.active .badge"
+                );
+
+
+            if (badge) {
+
+                badge.textContent =
+                    unread;
+
+                badge.style.display =
+                    unread > 0
+                        ? ""
+                        : "none";
+
+            }
+
+        }
+
+
+        /* =========================================================
+           MARK AS READ
+        ========================================================== */
+
+        function markAsRead(id) {
+
+            const notification =
+                notifications.find(
+                    item => item.id === id
+                );
+
+
+            if (!notification) return;
+
+
+            notification.read =
+                true;
+
+
+            renderNotifications();
+
+        }
+
+
+        window.toggleRead =
+            function(id, event) {
+
+                event.stopPropagation();
+
+
+                const notification =
+                    notifications.find(
+                        item => item.id === id
+                    );
+
+
+                if (!notification) return;
+
+
+                notification.read =
+                    !notification.read;
+
+
+                showToast(
+                    "Notification Updated",
+                    notification.read
+                        ? "Notification marked as read."
+                        : "Notification marked as unread."
+                );
+
+
+                renderNotifications();
+
+            };
+
+
+        /* =========================================================
+           OPEN
+        ========================================================== */
+
+        window.openNotification =
+            function(id, event) {
+
+                event.stopPropagation();
+
+
+                const notification =
+                    notifications.find(
+                        item => item.id === id
+                    );
+
+
+                if (!notification) return;
+
+
+                notification.read =
+                    true;
+
+
+                if (
+                    notification.link
+                ) {
+
+                    window.location.href =
+                        notification.link;
+
+                }
+
+            };
+
+
+        /* =========================================================
+           DELETE
+        ========================================================== */
+
+        window.deleteNotification =
+            function(id, event) {
+
+                event.stopPropagation();
+
+
+                const index =
+                    notifications.findIndex(
+                        item => item.id === id
+                    );
+
+
+                if (index === -1) return;
+
+
+                notifications.splice(
+                    index,
+                    1
+                );
+
+
+                showToast(
+                    "Notification Deleted",
+                    "The notification has been removed."
+                );
+
+
+                renderNotifications();
+
+            };
+
+
+        /* =========================================================
+           MARK ALL
+        ========================================================== */
+
+        document.getElementById(
+            "markAllBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                notifications.forEach(
+                    notification => {
+
+                        notification.read =
+                            true;
+
+                    }
+                );
+
+
+                showToast(
+                    "All Notifications Read",
+                    "All notifications have been marked as read."
+                );
+
+
+                renderNotifications();
+
+            }
+        );
+
+
+        /* =========================================================
+           CLEAR ALL
+        ========================================================== */
+
+        document.getElementById(
+            "clearAllBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                const confirmClear =
+                    confirm(
+                        "Are you sure you want to clear all notifications?"
+                    );
+
+
+                if (!confirmClear) return;
+
+
+                notifications =
+                    [];
+
+
+                showToast(
+                    "Notifications Cleared",
+                    "All notifications have been removed."
+                );
+
+
+                renderNotifications();
+
+            }
+        );
+
+
+        /* =========================================================
+           FILTER EVENTS
+        ========================================================== */
+
+        notificationSearch.addEventListener(
+            "input",
+            renderNotifications
+        );
+
+
+        typeFilter.addEventListener(
+            "change",
+            renderNotifications
+        );
+
+
+        readFilter.addEventListener(
+            "change",
+            renderNotifications
+        );
+
+
+        timeFilter.addEventListener(
+            "change",
+            renderNotifications
+        );
+
+
+        globalSearch.addEventListener(
+            "input",
+            () => {
+
+                notificationSearch.value =
+                    globalSearch.value;
+
+                renderNotifications();
+
+            }
+        );
+
+
+        /* =========================================================
+           PREFERENCES
+        ========================================================== */
+
+        document.getElementById(
+            "savePreferences"
+        ).addEventListener(
+            "click",
+            () => {
+
+                const preferences = {
+
+                    feedback:
+                        document.getElementById(
+                            "prefFeedback"
+                        ).checked,
+
+                    alerts:
+                        document.getElementById(
+                            "prefAlerts"
+                        ).checked,
+
+                    reports:
+                        document.getElementById(
+                            "prefReports"
+                        ).checked,
+
+                    email:
+                        document.getElementById(
+                            "prefEmail"
+                        ).checked,
+
+                    browser:
+                        document.getElementById(
+                            "prefBrowser"
+                        ).checked,
+
+                    summary:
+                        document.getElementById(
+                            "prefSummary"
+                        ).checked
+
+                };
+
+
+                localStorage.setItem(
+                    "notificationPreferences",
+                    JSON.stringify(
+                        preferences
+                    )
+                );
+
+
+                showToast(
+                    "Preferences Saved",
+                    "Notification preferences have been updated."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           LOAD PREFERENCES
+        ========================================================== */
+
+        const savedPreferences =
+            localStorage.getItem(
+                "notificationPreferences"
+            );
+
+
+        if (savedPreferences) {
+
+            try {
+
+                const preferences =
+                    JSON.parse(
+                        savedPreferences
+                    );
+
+
+                document.getElementById(
+                    "prefFeedback"
+                ).checked =
+                    preferences.feedback;
+
+
+                document.getElementById(
+                    "prefAlerts"
+                ).checked =
+                    preferences.alerts;
+
+
+                document.getElementById(
+                    "prefReports"
+                ).checked =
+                    preferences.reports;
+
+
+                document.getElementById(
+                    "prefEmail"
+                ).checked =
+                    preferences.email;
+
+
+                document.getElementById(
+                    "prefBrowser"
+                ).checked =
+                    preferences.browser;
+
+
+                document.getElementById(
+                    "prefSummary"
+                ).checked =
+                    preferences.summary;
+
+            } catch (error) {
+
+                console.warn(
+                    "Could not load notification preferences."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        let toastTimer;
+
+
+        function showToast(
+            title,
+            message
+        ) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+
+            document.getElementById(
+                "toastTitle"
+            ).textContent =
+                title;
+
+
+            document.getElementById(
+                "toastMessage"
+            ).textContent =
+                message;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+
+        }
+
+
+        /* =========================================================
+           LOGOUT
+        ========================================================== */
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+
+                const logout =
+                    confirm(
+                        "Are you sure you want to logout?"
+                    );
+
+
+                if (logout) {
+
+                    window.location.href =
+                        "../index.html";
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================== */
+
+        renderNotifications();
+
+    </script>
+
+</body>
+</html>

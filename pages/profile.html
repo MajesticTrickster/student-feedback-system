@@ -1,0 +1,3170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Feedback System | Profile</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           PROFILE PAGE
+        ========================================================== */
+
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .page-title h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .danger-btn {
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 11px 18px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.22);
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .secondary-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .danger-btn {
+            background: rgba(239, 68, 68, 0.10);
+            color: var(--accent-red);
+            border: 1px solid rgba(239, 68, 68, 0.18);
+        }
+
+        .danger-btn:hover {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        /* =========================================================
+           PROFILE HERO
+        ========================================================== */
+
+        .profile-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #312e81,
+                    #4f46e5,
+                    #7c3aed
+                );
+            border-radius: var(--radius-xl);
+            padding: 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-hero::before {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            right: -70px;
+            top: -100px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .profile-hero::after {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            right: 130px;
+            bottom: -110px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .hero-profile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-avatar-wrap {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.8);
+            background: white;
+        }
+
+        .online-indicator {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 3px solid white;
+            right: 3px;
+            bottom: 3px;
+        }
+
+        .hero-profile-info h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .hero-profile-info p {
+            margin: 2px 0;
+            color: rgba(255,255,255,0.82);
+            font-size: 11px;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 7px;
+            margin-top: 11px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tag {
+            padding: 5px 10px;
+            background: rgba(255,255,255,0.13);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 999px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            min-width: 310px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stat {
+            padding: 15px;
+            text-align: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .hero-stat span {
+            color: rgba(255,255,255,0.72);
+            font-size: 9px;
+        }
+
+        /* =========================================================
+           CONTENT GRID
+        ========================================================== */
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .profile-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+
+        .card-header p {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================== */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .field-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .field-control {
+            width: 100%;
+            height: 43px;
+            padding: 0 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            outline: none;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+            transition: var(--transition-fast);
+        }
+
+        textarea.field-control {
+            height: 100px;
+            padding-top: 12px;
+            resize: vertical;
+        }
+
+        .field-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-bg);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .field-control:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* =========================================================
+           ACCOUNT INFORMATION
+        ========================================================== */
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+            font-size: 10px;
+        }
+
+        .info-value {
+            text-align: right;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .verified {
+            color: var(--accent-green);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* =========================================================
+           SECURITY
+        ========================================================== */
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .security-item:last-child {
+            border-bottom: none;
+        }
+
+        .security-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .security-info {
+            flex: 1;
+        }
+
+        .security-info strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .security-info span {
+            color: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        .security-btn {
+            height: 31px;
+            padding: 0 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .security-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* =========================================================
+           ACTIVITY
+        ========================================================== */
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-dot {
+            width: 29px;
+            height: 29px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+
+        .activity-dot.blue {
+            color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        .activity-dot.green {
+            color: var(--accent-green);
+            background: rgba(16,185,129,0.12);
+        }
+
+        .activity-dot.yellow {
+            color: var(--accent-yellow);
+            background: rgba(245,158,11,0.12);
+        }
+
+        .activity-dot.pink {
+            color: var(--accent-pink);
+            background: rgba(236,72,153,0.12);
+        }
+
+        .activity-text {
+            flex: 1;
+        }
+
+        .activity-text strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .activity-text span {
+            color: var(--text-secondary);
+            font-size: 9px;
+            line-height: 1.5;
+        }
+
+        .activity-time {
+            color: var(--text-tertiary);
+            font-size: 8px;
+            white-space: nowrap;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            min-width: 280px;
+            max-width: 380px;
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 5000;
+            opacity: 0;
+            transform: translateY(120px);
+            transition: 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast > i {
+            color: var(--accent-green);
+            font-size: 17px;
+        }
+
+        .toast strong {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .toast span {
+            color: var(--text-secondary);
+            font-size: 9px;
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.55);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 3000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .password-modal {
+            width: min(450px, 100%);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+        }
+
+        .close-modal {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .password-group {
+            margin-bottom: 14px;
+        }
+
+        .password-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            height: 43px;
+            padding: 0 42px 0 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+        }
+
+        .password-wrapper button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 33px;
+            height: 33px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+        .password-wrapper button:hover {
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+
+        .password-strength {
+            margin-top: 7px;
+            font-size: 9px;
+            color: var(--text-secondary);
+        }
+
+        .modal-footer {
+            padding: 15px 20px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1200px) {
+
+            .profile-hero {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-stats {
+                width: 100%;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .hero-profile {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(3, 1fr);
+                min-width: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="logo">
+
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+
+                <div class="logo-text">
+
+                    <h2>
+                        FeedbackHub
+                    </h2>
+
+                    <span>
+                        Student Portal
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="sidebar-toggle"
+                id="sidebarToggle"
+                type="button"
+            >
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <ul>
+
+                <li class="nav-item">
+
+                    <a href="../index.html">
+
+                        <i class="fas fa-th-large"></i>
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="feedbacks.html">
+
+                        <i class="fas fa-comments"></i>
+
+                        <span>
+                            Feedbacks
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="faculty.html">
+
+                        <i class="fas fa-chalkboard-teacher"></i>
+
+                        <span>
+                            Faculty
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="courses.html">
+
+                        <i class="fas fa-book-open"></i>
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="analytics.html">
+
+                        <i class="fas fa-chart-bar"></i>
+
+                        <span>
+                            Analytics
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="reports.html">
+
+                        <i class="fas fa-clipboard-list"></i>
+
+                        <span>
+                            Reports
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="notifications.html">
+
+                        <i class="fas fa-bell"></i>
+
+                        <span>
+                            Notifications
+                        </span>
+
+                        <span class="badge">
+                            3
+                        </span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <div class="nav-divider"></div>
+
+
+            <p class="nav-section-title">
+                Settings
+            </p>
+
+
+            <ul>
+
+                <li class="nav-item active">
+
+                    <a href="profile.html">
+
+                        <i class="fas fa-user-cog"></i>
+
+                        <span>
+                            Profile
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a href="settings.html">
+
+                        <i class="fas fa-cog"></i>
+
+                        <span>
+                            Settings
+                        </span>
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        href="#"
+                        id="logoutBtn"
+                    >
+
+                        <i class="fas fa-sign-out-alt"></i>
+
+                        <span>
+                            Logout
+                        </span>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="user-card">
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=40"
+                    alt="Admin"
+                >
+
+                <div class="user-info">
+
+                    <h4>
+                        Dr. Sarah Wilson
+                    </h4>
+
+                    <span>
+                        Administrator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    class="menu-btn"
+                    id="menuBtn"
+                    type="button"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
+
+
+                <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Search profile..."
+                        id="globalSearch"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div
+                    class="topbar-icon"
+                    id="themeToggle"
+                    title="Toggle Theme"
+                >
+
+                    <i class="fas fa-moon"></i>
+
+                </div>
+
+
+                <div
+                    class="topbar-icon"
+                    title="Notifications"
+                    onclick="window.location.href='notifications.html'"
+                >
+
+                    <i class="fas fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </div>
+
+
+                <div
+                    class="topbar-icon"
+                    title="Messages"
+                >
+
+                    <i class="fas fa-envelope"></i>
+
+                </div>
+
+
+                <div class="user-avatar">
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=Admin+User&background=6366f1&color=fff&rounded=true&size=36"
+                        alt="Admin"
+                    >
+
+                    <span class="status-dot"></span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             PAGE CONTENT
+        ====================================================== -->
+
+        <div class="page-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+                <div class="page-title">
+
+                    <h1>
+                        My Profile
+                    </h1>
+
+                    <p>
+                        Manage your administrator profile and account information.
+                    </p>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        class="secondary-btn"
+                        id="cancelEditBtn"
+                        type="button"
+                    >
+
+                        <i class="fas fa-undo"></i>
+
+                        Reset
+
+                    </button>
+
+
+                    <button
+                        class="primary-btn"
+                        id="saveProfileBtn"
+                        type="button"
+                    >
+
+                        <i class="fas fa-save"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROFILE HERO
+            ================================================== -->
+
+            <section class="profile-hero">
+
+                <div class="hero-profile">
+
+                    <div class="profile-avatar-wrap">
+
+                        <img
+                            id="heroAvatar"
+                            class="profile-avatar"
+                            src="https://ui-avatars.com/api/?name=Sarah+Wilson&background=6366f1&color=fff&size=200"
+                            alt="Dr. Sarah Wilson"
+                        >
+
+                        <span class="online-indicator"></span>
+
+                    </div>
+
+
+                    <div class="hero-profile-info">
+
+                        <h2 id="heroName">
+                            Dr. Sarah Wilson
+                        </h2>
+
+                        <p>
+                            Senior Administrator
+                        </p>
+
+                        <p>
+                            Academic Administration Department
+                        </p>
+
+                        <div class="hero-tags">
+
+                            <span class="hero-tag">
+                                Administrator
+                            </span>
+
+                            <span class="hero-tag">
+                                Verified Account
+                            </span>
+
+                            <span class="hero-tag">
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-stats">
+
+                    <div class="hero-stat">
+
+                        <strong>
+                            12,847
+                        </strong>
+
+                        <span>
+                            Feedback Managed
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong>
+                            156
+                        </strong>
+
+                        <span>
+                            Courses
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-stat">
+
+                        <strong>
+                            87%
+                        </strong>
+
+                        <span>
+                            Response Rate
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PROFILE GRID
+            ================================================== -->
+
+            <div class="profile-grid">
+
+
+                <!-- LEFT COLUMN -->
+
+                <div>
+
+
+                    <!-- Personal Information -->
+
+                    <div class="profile-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Personal Information
+                                </h3>
+
+                                <p>
+                                    Update your personal and professional details.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="form-grid">
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        First Name
+                                    </label>
+
+                                    <input
+                                        class="field-control"
+                                        type="text"
+                                        id="firstName"
+                                        value="Sarah"
+                                    >
+
+                                </div>
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        Last Name
+                                    </label>
+
+                                    <input
+                                        class="field-control"
+                                        type="text"
+                                        id="lastName"
+                                        value="Wilson"
+                                    >
+
+                                </div>
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        Email Address
+                                    </label>
+
+                                    <input
+                                        class="field-control"
+                                        type="email"
+                                        id="email"
+                                        value="sarah.wilson@example.com"
+                                    >
+
+                                </div>
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        Phone Number
+                                    </label>
+
+                                    <input
+                                        class="field-control"
+                                        type="tel"
+                                        id="phone"
+                                        value="+91 98765 43210"
+                                    >
+
+                                </div>
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        Job Title
+                                    </label>
+
+                                    <input
+                                        class="field-control"
+                                        type="text"
+                                        id="jobTitle"
+                                        value="Senior Administrator"
+                                    >
+
+                                </div>
+
+
+                                <div class="field-group">
+
+                                    <label>
+                                        Department
+                                    </label>
+
+                                    <select
+                                        class="field-control"
+                                        id="department"
+                                    >
+
+                                        <option selected>
+                                            Academic Administration
+                                        </option>
+
+                                        <option>
+                                            Computer Science
+                                        </option>
+
+                                        <option>
+                                            Mathematics
+                                        </option>
+
+                                        <option>
+                                            Student Affairs
+                                        </option>
+
+                                        <option>
+                                            Human Resources
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="field-group full-width">
+
+                                    <label>
+                                        About
+                                    </label>
+
+                                    <textarea
+                                        class="field-control"
+                                        id="about"
+                                    >Academic administrator responsible for student feedback management, faculty performance monitoring, academic reporting and institutional analytics.</textarea>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Account Information -->
+
+                    <div class="profile-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Account Information
+                                </h3>
+
+                                <p>
+                                    Details associated with your system account.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="info-list">
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Account ID
+                                    </span>
+
+                                    <span class="info-value">
+                                        FBH-ADM-00124
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Username
+                                    </span>
+
+                                    <span class="info-value">
+                                        sarah.wilson
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Account Type
+                                    </span>
+
+                                    <span class="info-value">
+                                        Administrator
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Email Status
+                                    </span>
+
+                                    <span class="info-value verified">
+
+                                        <i class="fas fa-check-circle"></i>
+
+                                        Verified
+
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Account Created
+                                    </span>
+
+                                    <span class="info-value">
+                                        15 January 2024
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Last Login
+                                    </span>
+
+                                    <span class="info-value">
+                                        Today, 09:24 AM
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-row">
+
+                                    <span class="info-label">
+                                        Account Status
+                                    </span>
+
+                                    <span class="info-value verified">
+
+                                        <i class="fas fa-circle"></i>
+
+                                        Active
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- RIGHT COLUMN -->
+
+                <div>
+
+
+                    <!-- Security -->
+
+                    <div class="profile-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Security
+                                </h3>
+
+                                <p>
+                                    Protect your account.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="security-item">
+
+                                <div class="security-icon">
+
+                                    <i class="fas fa-lock"></i>
+
+                                </div>
+
+
+                                <div class="security-info">
+
+                                    <strong>
+                                        Password
+                                    </strong>
+
+                                    <span>
+                                        Last changed 28 days ago
+                                    </span>
+
+                                </div>
+
+
+                                <button
+                                    class="security-btn"
+                                    id="changePasswordBtn"
+                                    type="button"
+                                >
+                                    Change
+                                </button>
+
+                            </div>
+
+
+                            <div class="security-item">
+
+                                <div class="security-icon">
+
+                                    <i class="fas fa-shield-alt"></i>
+
+                                </div>
+
+
+                                <div class="security-info">
+
+                                    <strong>
+                                        Two-Factor Authentication
+                                    </strong>
+
+                                    <span>
+                                        Additional security layer
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch"
+                                       style="position:relative;width:40px;height:22px;display:inline-block;">
+
+                                    <input
+                                        type="checkbox"
+                                        id="twoFactor"
+                                        style="opacity:0;width:0;height:0;"
+                                    >
+
+                                    <span class="slider"
+                                          style="position:absolute;inset:0;cursor:pointer;background:#cbd5e1;border-radius:999px;transition:.2s;">
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="security-item">
+
+                                <div class="security-icon">
+
+                                    <i class="fas fa-desktop"></i>
+
+                                </div>
+
+
+                                <div class="security-info">
+
+                                    <strong>
+                                        Active Sessions
+                                    </strong>
+
+                                    <span>
+                                        2 devices currently signed in
+                                    </span>
+
+                                </div>
+
+
+                                <button
+                                    class="security-btn"
+                                    id="sessionsBtn"
+                                    type="button"
+                                >
+                                    Manage
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Recent Activity -->
+
+                    <div class="profile-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Recent Activity
+                                </h3>
+
+                                <p>
+                                    Latest account actions.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="activity-list">
+
+
+                                <div class="activity-item">
+
+                                    <div class="activity-dot blue">
+
+                                        <i class="fas fa-file-alt"></i>
+
+                                    </div>
+
+                                    <div class="activity-text">
+
+                                        <strong>
+                                            Generated monthly report
+                                        </strong>
+
+                                        <span>
+                                            Student Feedback — September 2026
+                                        </span>
+
+                                    </div>
+
+                                    <span class="activity-time">
+                                        1h
+                                    </span>
+
+                                </div>
+
+
+                                <div class="activity-item">
+
+                                    <div class="activity-dot green">
+
+                                        <i class="fas fa-check"></i>
+
+                                    </div>
+
+                                    <div class="activity-text">
+
+                                        <strong>
+                                            Reviewed feedback
+                                        </strong>
+
+                                        <span>
+                                            CS301 student feedback submissions
+                                        </span>
+
+                                    </div>
+
+                                    <span class="activity-time">
+                                        3h
+                                    </span>
+
+                                </div>
+
+
+                                <div class="activity-item">
+
+                                    <div class="activity-dot yellow">
+
+                                        <i class="fas fa-cog"></i>
+
+                                    </div>
+
+                                    <div class="activity-text">
+
+                                        <strong>
+                                            Updated system settings
+                                        </strong>
+
+                                        <span>
+                                            Notification preferences
+                                        </span>
+
+                                    </div>
+
+                                    <span class="activity-time">
+                                        1d
+                                    </span>
+
+                                </div>
+
+
+                                <div class="activity-item">
+
+                                    <div class="activity-dot pink">
+
+                                        <i class="fas fa-user-edit"></i>
+
+                                    </div>
+
+                                    <div class="activity-text">
+
+                                        <strong>
+                                            Profile information updated
+                                        </strong>
+
+                                        <span>
+                                            Contact information
+                                        </span>
+
+                                    </div>
+
+                                    <span class="activity-time">
+                                        3d
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Quick Actions -->
+
+                    <div class="profile-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>
+                                    Quick Actions
+                                </h3>
+
+                                <p>
+                                    Common account operations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <button
+                                class="secondary-btn"
+                                style="width:100%; margin-bottom:8px;"
+                                id="exportProfileBtn"
+                                type="button"
+                            >
+
+                                <i class="fas fa-download"></i>
+
+                                Export Profile
+
+                            </button>
+
+
+                            <button
+                                class="secondary-btn"
+                                style="width:100%; margin-bottom:8px;"
+                                id="viewNotificationsBtn"
+                                type="button"
+                            >
+
+                                <i class="fas fa-bell"></i>
+
+                                Notification Preferences
+
+                            </button>
+
+
+                            <button
+                                class="danger-btn"
+                                style="width:100%;"
+                                id="logoutProfileBtn"
+                                type="button"
+                            >
+
+                                <i class="fas fa-sign-out-alt"></i>
+
+                                Logout
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         CHANGE PASSWORD MODAL
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="passwordModal"
+    >
+
+        <div class="password-modal">
+
+            <div class="modal-header">
+
+                <h3>
+                    Change Password
+                </h3>
+
+                <button
+                    class="close-modal"
+                    id="closePasswordModal"
+                    type="button"
+                >
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <div class="password-group">
+
+                    <label>
+                        Current Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            placeholder="Enter current password"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="currentPassword"
+                        >
+
+                            <i class="fas fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="password-group">
+
+                    <label>
+                        New Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            placeholder="Enter new password"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="newPassword"
+                        >
+
+                            <i class="fas fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="password-strength"
+                        id="passwordStrength"
+                    >
+                        Password strength: Not entered
+                    </div>
+
+                </div>
+
+
+                <div class="password-group">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm new password"
+                        >
+
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            data-target="confirmPassword"
+                        >
+
+                            <i class="fas fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="secondary-btn"
+                    id="cancelPasswordBtn"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    class="primary-btn"
+                    id="savePasswordBtn"
+                    type="button"
+                >
+
+                    <i class="fas fa-key"></i>
+
+                    Update Password
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <i class="fas fa-check-circle"></i>
+
+        <div>
+
+            <strong id="toastTitle">
+                Success
+            </strong>
+
+            <span id="toastMessage">
+                Operation completed successfully.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================== */
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const menuBtn =
+            document.getElementById("menuBtn");
+
+
+        sidebarToggle.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.toggle(
+                    "collapsed"
+                );
+
+            }
+        );
+
+
+        menuBtn.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           THEME
+        ========================================================== */
+
+        const themeToggle =
+            document.getElementById(
+                "themeToggle"
+            );
+
+        const themeIcon =
+            themeToggle.querySelector(
+                "i"
+            );
+
+
+        if (
+            localStorage.getItem(
+                "theme"
+            ) === "dark"
+        ) {
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                "dark"
+            );
+
+            themeIcon.classList.remove(
+                "fa-moon"
+            );
+
+            themeIcon.classList.add(
+                "fa-sun"
+            );
+
+        }
+
+
+        themeToggle.addEventListener(
+            "click",
+            () => {
+
+                const isDark =
+                    document.documentElement.getAttribute(
+                        "data-theme"
+                    ) === "dark";
+
+
+                if (isDark) {
+
+                    document.documentElement.setAttribute(
+                        "data-theme",
+                        "light"
+                    );
+
+                    themeIcon.classList.remove(
+                        "fa-sun"
+                    );
+
+                    themeIcon.classList.add(
+                        "fa-moon"
+                    );
+
+                    localStorage.setItem(
+                        "theme",
+                        "light"
+                    );
+
+                } else {
+
+                    document.documentElement.setAttribute(
+                        "data-theme",
+                        "dark"
+                    );
+
+                    themeIcon.classList.remove(
+                        "fa-moon"
+                    );
+
+                    themeIcon.classList.add(
+                        "fa-sun"
+                    );
+
+                    localStorage.setItem(
+                        "theme",
+                        "dark"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           PROFILE DATA
+        ========================================================== */
+
+        const originalProfile = {
+
+            firstName:
+                "Sarah",
+
+            lastName:
+                "Wilson",
+
+            email:
+                "sarah.wilson@example.com",
+
+            phone:
+                "+91 98765 43210",
+
+            jobTitle:
+                "Senior Administrator",
+
+            department:
+                "Academic Administration",
+
+            about:
+                "Academic administrator responsible for student feedback management, faculty performance monitoring, academic reporting and institutional analytics."
+
+        };
+
+
+        /* =========================================================
+           SAVE PROFILE
+        ========================================================== */
+
+        document.getElementById(
+            "saveProfileBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                const profile = {
+
+                    firstName:
+                        document.getElementById(
+                            "firstName"
+                        ).value.trim(),
+
+                    lastName:
+                        document.getElementById(
+                            "lastName"
+                        ).value.trim(),
+
+                    email:
+                        document.getElementById(
+                            "email"
+                        ).value.trim(),
+
+                    phone:
+                        document.getElementById(
+                            "phone"
+                        ).value.trim(),
+
+                    jobTitle:
+                        document.getElementById(
+                            "jobTitle"
+                        ).value.trim(),
+
+                    department:
+                        document.getElementById(
+                            "department"
+                        ).value,
+
+                    about:
+                        document.getElementById(
+                            "about"
+                        ).value.trim()
+
+                };
+
+
+                if (
+                    !profile.firstName ||
+                    !profile.lastName ||
+                    !profile.email
+                ) {
+
+                    showToast(
+                        "Missing Information",
+                        "Please complete the required profile fields."
+                    );
+
+                    return;
+
+                }
+
+
+                localStorage.setItem(
+                    "feedbackHubProfile",
+                    JSON.stringify(
+                        profile
+                    )
+                );
+
+
+                updateHero(profile);
+
+
+                showToast(
+                    "Profile Saved",
+                    "Your profile information has been updated."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           UPDATE HERO
+        ========================================================== */
+
+        function updateHero(profile) {
+
+            const fullName =
+                `${profile.firstName} ${profile.lastName}`;
+
+
+            document.getElementById(
+                "heroName"
+            ).textContent =
+                profile.jobTitle
+                    ? `${profile.firstName} ${profile.lastName}`
+                    : fullName;
+
+
+            const avatarUrl =
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    fullName
+                )}&background=6366f1&color=fff&size=200`;
+
+
+            document.getElementById(
+                "heroAvatar"
+            ).src =
+                avatarUrl;
+
+        }
+
+
+        /* =========================================================
+           LOAD PROFILE
+        ========================================================== */
+
+        const savedProfile =
+            localStorage.getItem(
+                "feedbackHubProfile"
+            );
+
+
+        if (savedProfile) {
+
+            try {
+
+                const profile =
+                    JSON.parse(
+                        savedProfile
+                    );
+
+
+                document.getElementById(
+                    "firstName"
+                ).value =
+                    profile.firstName || "";
+
+
+                document.getElementById(
+                    "lastName"
+                ).value =
+                    profile.lastName || "";
+
+
+                document.getElementById(
+                    "email"
+                ).value =
+                    profile.email || "";
+
+
+                document.getElementById(
+                    "phone"
+                ).value =
+                    profile.phone || "";
+
+
+                document.getElementById(
+                    "jobTitle"
+                ).value =
+                    profile.jobTitle || "";
+
+
+                document.getElementById(
+                    "department"
+                ).value =
+                    profile.department || "";
+
+
+                document.getElementById(
+                    "about"
+                ).value =
+                    profile.about || "";
+
+
+                updateHero(profile);
+
+            } catch (error) {
+
+                console.warn(
+                    "Could not load saved profile."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           RESET PROFILE
+        ========================================================== */
+
+        document.getElementById(
+            "cancelEditBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                document.getElementById(
+                    "firstName"
+                ).value =
+                    originalProfile.firstName;
+
+
+                document.getElementById(
+                    "lastName"
+                ).value =
+                    originalProfile.lastName;
+
+
+                document.getElementById(
+                    "email"
+                ).value =
+                    originalProfile.email;
+
+
+                document.getElementById(
+                    "phone"
+                ).value =
+                    originalProfile.phone;
+
+
+                document.getElementById(
+                    "jobTitle"
+                ).value =
+                    originalProfile.jobTitle;
+
+
+                document.getElementById(
+                    "department"
+                ).value =
+                    originalProfile.department;
+
+
+                document.getElementById(
+                    "about"
+                ).value =
+                    originalProfile.about;
+
+
+                updateHero(
+                    originalProfile
+                );
+
+
+                showToast(
+                    "Profile Reset",
+                    "Profile values have been restored."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           PASSWORD MODAL
+        ========================================================== */
+
+        const passwordModal =
+            document.getElementById(
+                "passwordModal"
+            );
+
+
+        document.getElementById(
+            "changePasswordBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                passwordModal.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "closePasswordModal"
+        ).addEventListener(
+            "click",
+            closePasswordModal
+        );
+
+
+        document.getElementById(
+            "cancelPasswordBtn"
+        ).addEventListener(
+            "click",
+            closePasswordModal
+        );
+
+
+        passwordModal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    passwordModal
+                ) {
+
+                    closePasswordModal();
+
+                }
+
+            }
+        );
+
+
+        function closePasswordModal() {
+
+            passwordModal.classList.remove(
+                "active"
+            );
+
+            document.getElementById(
+                "currentPassword"
+            ).value = "";
+
+            document.getElementById(
+                "newPassword"
+            ).value = "";
+
+            document.getElementById(
+                "confirmPassword"
+            ).value = "";
+
+            document.getElementById(
+                "passwordStrength"
+            ).textContent =
+                "Password strength: Not entered";
+
+        }
+
+
+        /* =========================================================
+           PASSWORD VISIBILITY
+        ========================================================== */
+
+        document.querySelectorAll(
+            ".toggle-password"
+        ).forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const input =
+                        document.getElementById(
+                            button.dataset.target
+                        );
+
+                    const icon =
+                        button.querySelector(
+                            "i"
+                        );
+
+
+                    if (
+                        input.type ===
+                        "password"
+                    ) {
+
+                        input.type =
+                            "text";
+
+                        icon.classList.remove(
+                            "fa-eye"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye-slash"
+                        );
+
+                    } else {
+
+                        input.type =
+                            "password";
+
+                        icon.classList.remove(
+                            "fa-eye-slash"
+                        );
+
+                        icon.classList.add(
+                            "fa-eye"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        /* =========================================================
+           PASSWORD STRENGTH
+        ========================================================== */
+
+        document.getElementById(
+            "newPassword"
+        ).addEventListener(
+            "input",
+            function() {
+
+                const password =
+                    this.value;
+
+
+                const strength =
+                    document.getElementById(
+                        "passwordStrength"
+                    );
+
+
+                if (!password) {
+
+                    strength.textContent =
+                        "Password strength: Not entered";
+
+                    return;
+
+                }
+
+
+                let score = 0;
+
+
+                if (
+                    password.length >= 8
+                ) {
+                    score++;
+                }
+
+
+                if (
+                    /[A-Z]/.test(
+                        password
+                    )
+                ) {
+                    score++;
+                }
+
+
+                if (
+                    /[0-9]/.test(
+                        password
+                    )
+                ) {
+                    score++;
+                }
+
+
+                if (
+                    /[^A-Za-z0-9]/.test(
+                        password
+                    )
+                ) {
+                    score++;
+                }
+
+
+                const labels = [
+
+                    "Very Weak",
+                    "Weak",
+                    "Fair",
+                    "Strong",
+                    "Very Strong"
+
+                ];
+
+
+                strength.textContent =
+                    `Password strength: ${labels[score]}`;
+
+            }
+        );
+
+
+        /* =========================================================
+           SAVE PASSWORD
+        ========================================================== */
+
+        document.getElementById(
+            "savePasswordBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                const current =
+                    document.getElementById(
+                        "currentPassword"
+                    ).value;
+
+
+                const newPassword =
+                    document.getElementById(
+                        "newPassword"
+                    ).value;
+
+
+                const confirmPassword =
+                    document.getElementById(
+                        "confirmPassword"
+                    ).value;
+
+
+                if (
+                    !current ||
+                    !newPassword ||
+                    !confirmPassword
+                ) {
+
+                    showToast(
+                        "Incomplete",
+                        "Please fill in all password fields."
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    newPassword.length < 8
+                ) {
+
+                    showToast(
+                        "Password Too Short",
+                        "New password must contain at least 8 characters."
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    newPassword !==
+                    confirmPassword
+                ) {
+
+                    showToast(
+                        "Password Mismatch",
+                        "New password and confirmation do not match."
+                    );
+
+                    return;
+
+                }
+
+
+                closePasswordModal();
+
+
+                showToast(
+                    "Password Updated",
+                    "Your password has been updated successfully."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           TWO FACTOR
+        ========================================================== */
+
+        document.getElementById(
+            "twoFactor"
+        ).addEventListener(
+            "change",
+            function() {
+
+                showToast(
+                    "Security Setting",
+                    this.checked
+                        ? "Two-factor authentication enabled."
+                        : "Two-factor authentication disabled."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           ACTIVE SESSIONS
+        ========================================================== */
+
+        document.getElementById(
+            "sessionsBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                showToast(
+                    "Active Sessions",
+                    "Session management screen will be connected here."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           EXPORT PROFILE
+        ========================================================== */
+
+        document.getElementById(
+            "exportProfileBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                const firstName =
+                    document.getElementById(
+                        "firstName"
+                    ).value;
+
+
+                const lastName =
+                    document.getElementById(
+                        "lastName"
+                    ).value;
+
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value;
+
+
+                const phone =
+                    document.getElementById(
+                        "phone"
+                    ).value;
+
+
+                const jobTitle =
+                    document.getElementById(
+                        "jobTitle"
+                    ).value;
+
+
+                const department =
+                    document.getElementById(
+                        "department"
+                    ).value;
+
+
+                const about =
+                    document.getElementById(
+                        "about"
+                    ).value;
+
+
+                const profileText = `
+
+FEEDBACKHUB
+ADMINISTRATOR PROFILE
+=====================================
+
+Name:
+${firstName} ${lastName}
+
+Email:
+${email}
+
+Phone:
+${phone}
+
+Job Title:
+${jobTitle}
+
+Department:
+${department}
+
+Account Type:
+Administrator
+
+Account Status:
+Active
+
+Account Created:
+15 January 2024
+
+=====================================
+
+About:
+
+${about}
+
+=====================================
+
+Feedback Managed:
+12,847
+
+Courses:
+156
+
+Response Rate:
+87%
+
+                `;
+
+
+                const blob =
+                    new Blob(
+                        [profileText],
+                        {
+                            type:
+                                "text/plain;charset=utf-8"
+                        }
+                    );
+
+
+                const url =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                link.href =
+                    url;
+
+                link.download =
+                    "admin-profile.txt";
+
+
+                link.click();
+
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+
+                showToast(
+                    "Profile Exported",
+                    "Your profile information has been downloaded."
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           NOTIFICATION PREFERENCES
+        ========================================================== */
+
+        document.getElementById(
+            "viewNotificationsBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "notifications.html";
+
+            }
+        );
+
+
+        /* =========================================================
+           LOGOUT
+        ========================================================== */
+
+        function logout() {
+
+            const confirmLogout =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+
+            if (confirmLogout) {
+
+                window.location.href =
+                    "../index.html";
+
+            }
+
+        }
+
+
+        document.getElementById(
+            "logoutBtn"
+        ).addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                logout();
+
+            }
+        );
+
+
+        document.getElementById(
+            "logoutProfileBtn"
+        ).addEventListener(
+            "click",
+            logout
+        );
+
+
+        /* =========================================================
+           SEARCH
+        ========================================================== */
+
+        document.getElementById(
+            "globalSearch"
+        ).addEventListener(
+            "input",
+            function() {
+
+                const query =
+                    this.value
+                        .toLowerCase()
+                        .trim();
+
+
+                if (!query) {
+                    return;
+                }
+
+
+                const pageText =
+                    document.body.innerText
+                        .toLowerCase();
+
+
+                if (
+                    !pageText.includes(
+                        query
+                    )
+                ) {
+
+                    showToast(
+                        "No Match",
+                        "No matching profile information was found."
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        let toastTimeout;
+
+
+        function showToast(
+            title,
+            message
+        ) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+
+            document.getElementById(
+                "toastTitle"
+            ).textContent =
+                title;
+
+
+            document.getElementById(
+                "toastMessage"
+            ).textContent =
+                message;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimeout
+            );
+
+
+            toastTimeout =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+
+        }
+
+    </script>
+
+</body>
+</html>
