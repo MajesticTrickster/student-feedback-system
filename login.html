@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | FeedbackHub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(99, 102, 241, 0.20), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.18), transparent 35%),
+                #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 620px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(15, 23, 42, 0.16);
+        }
+
+        .login-left {
+            position: relative;
+            padding: 55px;
+            color: #fff;
+            background: linear-gradient(
+                145deg,
+                #4f46e5,
+                #6366f1 50%,
+                #8b5cf6
+            );
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .login-left::before,
+        .login-left::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .login-left::before {
+            width: 320px;
+            height: 320px;
+            top: -140px;
+            right: -100px;
+        }
+
+        .login-left::after {
+            width: 260px;
+            height: 260px;
+            bottom: -120px;
+            left: -100px;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 55px;
+        }
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand h1 {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            display: block;
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-content h2 {
+            font-size: 40px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .welcome-content p {
+            max-width: 450px;
+            font-size: 15px;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 35px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .login-right {
+            padding: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-form-container {
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .login-form-container h2 {
+            color: #1e293b;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 50px;
+            padding: 0 45px;
+            border: 1px solid #dbe1ea;
+            border-radius: 12px;
+            outline: none;
+            background: #fff;
+            color: #1e293b;
+            font-family: inherit;
+            font-size: 14px;
+            transition: 0.25s ease;
+        }
+
+        .form-control:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.10);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .password-toggle:hover {
+            color: #6366f1;
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #64748b;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            accent-color: #6366f1;
+        }
+
+        .forgot-password {
+            border: none;
+            background: transparent;
+            color: #6366f1;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+            box-shadow: 0 8px 22px rgba(79, 70, 229, 0.25);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.30);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .demo-login {
+            margin-top: 22px;
+            padding: 14px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .demo-login p {
+            color: #64748b;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .demo-login strong {
+            color: #334155;
+            font-size: 12px;
+        }
+
+        .message {
+            display: none;
+            padding: 11px 13px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-bottom: 18px;
+        }
+
+        .message.error {
+            display: block;
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .message.success {
+            display: block;
+            color: #047857;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+        }
+
+        .footer-text {
+            margin-top: 28px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        @media (max-width: 850px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                max-width: 520px;
+            }
+
+            .login-left {
+                padding: 35px;
+                min-height: 360px;
+            }
+
+            .welcome-content h2 {
+                font-size: 30px;
+            }
+
+            .brand {
+                margin-bottom: 30px;
+            }
+
+            .login-right {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .login-wrapper {
+                border-radius: 18px;
+            }
+
+            .login-left {
+                padding: 28px 22px;
+            }
+
+            .login-right {
+                padding: 35px 22px;
+            }
+
+            .welcome-content h2 {
+                font-size: 27px;
+            }
+
+            .welcome-content p {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-wrapper">
+
+        <!-- LEFT SECTION -->
+        <section class="login-left">
+
+            <div class="brand">
+                <div class="brand-icon">◆</div>
+
+                <div>
+                    <h1>FeedbackHub</h1>
+                    <span>Student Feedback System</span>
+                </div>
+            </div>
+
+            <div class="welcome-content">
+                <h2>Welcome Back!</h2>
+
+                <p>
+                    Manage student feedback, faculty performance,
+                    courses, analytics and reports from one centralized
+                    platform.
+                </p>
+
+                <ul class="feature-list">
+
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        Student Feedback Management
+                    </li>
+
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        Faculty & Course Monitoring
+                    </li>
+
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        Analytics & Performance Reports
+                    </li>
+
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        Centralized Notification System
+                    </li>
+
+                </ul>
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SECTION -->
+        <section class="login-right">
+
+            <div class="login-form-container">
+
+                <h2>Sign In</h2>
+
+                <p class="login-subtitle">
+                    Enter your credentials to access your dashboard.
+                </p>
+
+                <div id="message" class="message"></div>
+
+                <form id="loginForm">
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">✉</span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">🔒</span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="togglePassword"
+                                aria-label="Show password"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+                    <div class="form-options">
+
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe">
+                            Remember me
+                        </label>
+
+                        <button
+                            type="button"
+                            class="forgot-password"
+                            id="forgotPassword"
+                        >
+                            Forgot Password?
+                        </button>
+
+                    </div>
+
+
+                    <!-- LOGIN -->
+                    <button type="submit" class="login-btn">
+                        Sign In
+                    </button>
+
+                </form>
+
+
+                <!-- DEMO ACCOUNT -->
+                <div class="demo-login">
+                    <p>Demo Account</p>
+                    <strong>
+                        admin@feedbackhub.com &nbsp; / &nbsp; admin123
+                    </strong>
+                </div>
+
+                <div class="footer-text">
+                    © 2026 FeedbackHub. All rights reserved.
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const loginForm = document.getElementById("loginForm");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            const togglePassword = document.getElementById("togglePassword");
+            const forgotPassword = document.getElementById("forgotPassword");
+            const message = document.getElementById("message");
+            const rememberMe = document.getElementById("rememberMe");
+
+            const DEMO_EMAIL = "admin@feedbackhub.com";
+            const DEMO_PASSWORD = "admin123";
+
+
+            function showMessage(text, type) {
+                message.textContent = text;
+                message.className = "message " + type;
+            }
+
+
+            function clearMessage() {
+                message.textContent = "";
+                message.className = "message";
+            }
+
+
+            /* PASSWORD VISIBILITY */
+            togglePassword.addEventListener("click", () => {
+
+                if (passwordInput.type === "password") {
+
+                    passwordInput.type = "text";
+                    togglePassword.textContent = "🙈";
+                    togglePassword.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+
+                } else {
+
+                    passwordInput.type = "password";
+                    togglePassword.textContent = "👁";
+                    togglePassword.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+
+                }
+
+            });
+
+
+            /* REMEMBERED EMAIL */
+            const savedEmail = localStorage.getItem("feedbackhubEmail");
+
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                rememberMe.checked = true;
+            }
+
+
+            /* LOGIN */
+            loginForm.addEventListener("submit", (event) => {
+
+                event.preventDefault();
+
+                clearMessage();
+
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+
+                if (!email || !password) {
+
+                    showMessage(
+                        "Please enter your email and password.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    email.toLowerCase() === DEMO_EMAIL &&
+                    password === DEMO_PASSWORD
+                ) {
+
+                    if (rememberMe.checked) {
+                        localStorage.setItem(
+                            "feedbackhubEmail",
+                            email
+                        );
+                    } else {
+                        localStorage.removeItem(
+                            "feedbackhubEmail"
+                        );
+                    }
+
+                    sessionStorage.setItem(
+                        "feedbackhubLoggedIn",
+                        "true"
+                    );
+
+                    sessionStorage.setItem(
+                        "feedbackhubUser",
+                        email
+                    );
+
+                    showMessage(
+                        "Login successful. Redirecting...",
+                        "success"
+                    );
+
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 700);
+
+                } else {
+
+                    showMessage(
+                        "Invalid email or password. Use the demo account shown below.",
+                        "error"
+                    );
+
+                }
+
+            });
+
+
+            /* FORGOT PASSWORD */
+            forgotPassword.addEventListener("click", () => {
+
+                showMessage(
+                    "Password recovery is available in the full authentication backend.",
+                    "error"
+                );
+
+            });
+
+        });
+    </script>
+
+</body>
+</html>
